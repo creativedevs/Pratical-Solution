@@ -1,0 +1,19 @@
+{"JohnDoe": {
+    "fullName": {
+      "en": "Mr John Doe"
+    },
+    "description": {
+      "en": "Lorem Ipsum."
+    },
+    "identifier": "com.john.doe"
+},
+"JaneDoe": {
+    "fullName": {
+      "en": "Ms Jane Doe"
+    },
+    "description": {
+      "en": "Lorem Ipsum."
+    },
+    "identifier": "com.jane.doe"
+},
+}
