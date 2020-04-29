@@ -16,5 +16,14 @@
          "en":"Lorem Ipsum."
       },
       "identifier":"com.jane.doe"
+   },
+   "David":{
+      "fullName":{
+         "en":"David Watts"
+      },
+      "description":{
+         "en":"Lorem Ipsum."
+      },
+      "identifier":"com.david.watts"
    }
 }
