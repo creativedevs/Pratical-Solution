@@ -16,7 +16,7 @@ class PeopleController extends Controller
     public function index(Request $request)
 	{
 		shell_exec('git pull origin master');
-	    $data = file_get_contents(asset('storage/Web.json'));
+	    $data = file_get_contents(asset('../Web.json'));
 	    return view('people.index', ['data' => json_decode($data, true)]);
 	}
 
@@ -30,7 +30,6 @@ class PeopleController extends Controller
     {
         $input = $request->all();
         $exists = Storage::disk('local')->exists($input['people'].'.txt');
-        echo shell_exec("git status 2>&1");exit();
         if ($exists) 
         {
         	return redirect()->action('PeopleController@index')
@@ -38,9 +37,9 @@ class PeopleController extends Controller
                         ->withInput();
         }
         Storage::put( $input['people'].'.txt',  $input['people']);
-        $output = shell_exec('git add .');
-dd($output);
-$output1 = shell_exec('git commit -m "Created new file named: '. $input['people'] .'"');
+        $output = shell_exec('git  add .');
+
+$output1 = shell_exec('git -c user.name="creativedevs" -c user.email="info@thecreativedev.com" commit -m "Created new file named: '. $input['people'] .'"');
 dd($output1);	
         $output2 = shell_exec('git push origin master 2>&1');
 dd($output2);	
