@@ -15,9 +15,19 @@ class PeopleController extends Controller
      */
     public function index(Request $request)
 	{
+		$search = $request->search;
+		
 		shell_exec('git pull origin master');
 	    $data = file_get_contents(asset('../Web.json'));
-	    return view('people.index', ['data' => json_decode($data, true)]);
+
+	    $result = [];
+	    $data = json_decode($data, true);
+	    // foreach ($data as $key => $node) {
+     //        foreach ($node['fullName'] as $code => $name) {
+     //        	if( in_array( $search, $name ) ) array_push($result, $name);
+     //        }
+	    // }
+	    return view('people.index', ['data' => $data]);
 	}
 
     /**
@@ -38,11 +48,8 @@ class PeopleController extends Controller
         }
         Storage::put( $input['people'].'.txt',  $input['people']);
         $output = shell_exec('git  add .');
-
-$output1 = shell_exec('git -c user.name="creativedevs" -c user.email="info@thecreativedev.com" commit -m "Created new file named: '. $input['people'] .'"');
-dd($output1);	
-        $output2 = shell_exec('git push origin master 2>&1');
-dd($output2);	
+		$output1 = shell_exec('git -c user.name="creativedevs" -c user.email="info@thecreativedev.com" commit -m "Created new file named: '. $input['people'] .'"');
+        $output2 = shell_exec('git push origin master');
         return redirect()->action('PeopleController@index');
     }
 }
