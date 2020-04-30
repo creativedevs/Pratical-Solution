@@ -16,6 +16,10 @@
     @yield('main')
     
     <h2> Form </h2>
+    @if(session('success'))
+        <h1>{{session('success')}}</h1>
+    @endif
+
     @if ($errors->any())
       <div class="alert alert-danger">
           <ul>
@@ -49,12 +53,11 @@
     </form>
     <!-- Script -->
     <script type="text/javascript">
-    $(document).ready(function(){
-        // Initialize select2
-        $("#people").select2();
-    });
+      $(document).ready(function(){
+          // Initialize select2
+          $("#people").select2();
+      });
     </script>
-
   </div>
 </body>
 </html>
