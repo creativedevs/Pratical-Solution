@@ -25,5 +25,14 @@
          "en":"Lorem Ipsum."
       },
       "identifier":"com.david.watts"
+   },
+   "Laura":{
+      "fullName":{
+         "en":"Laura Thompson"
+      },
+      "description":{
+         "en":"Lorem Ipsum."
+      },
+      "identifier":"com.laura.thompson"
    }
 }
