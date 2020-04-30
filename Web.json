@@ -34,5 +34,14 @@
          "en":"Lorem Ipsum."
       },
       "identifier":"com.laura.thompson"
+   },
+   "Angus":{
+      "fullName":{
+         "en":"Angus MacMaster"
+      },
+      "description":{
+         "en":"Lorem Ipsum."
+      },
+      "identifier":"com.angus.macmaster"
    }
 }
