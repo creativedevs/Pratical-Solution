@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 // import the storage facade
 use Illuminate\Support\Facades\Storage;
+use Cz\Git\GitRepository;
 
 class PeopleController extends Controller
 {
@@ -15,23 +16,14 @@ class PeopleController extends Controller
      */
     public function index(Request $request)
 	{
-		$search = $request->search;
-		
-		shell_exec('git pull origin master');
+		$d = shell_exec('git clone git@github.com:creativedevs/Pratical-Solution.git');
+		$output = shell_exec('git pull origin master');
 	    $data = file_get_contents(asset('../Web.json'));
-
-	    $result = [];
-	    $data = json_decode($data, true);
-	    // foreach ($data as $key => $node) {
-     //        foreach ($node['fullName'] as $code => $name) {
-     //        	if( in_array( $search, $name ) ) array_push($result, $name);
-     //        }
-	    // }
-	    return view('people.index', ['data' => $data]);
+	    return view('people.index', ['data' => json_decode($data, true)]);
 	}
 
     /**
-     * Store a newly created product in storage.
+     * Store a new data in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -39,17 +31,19 @@ class PeopleController extends Controller
 	public function store(Request $request)
     {
         $input = $request->all();
-        $exists = Storage::disk('local')->exists($input['people'].'.txt');
+        $filename = $input['people'].'.txt';
+        $exists = Storage::disk('local')->exists($filename);
         if ($exists) 
         {
         	return redirect()->action('PeopleController@index')
-                        ->withErrors(['errorMessage'=>'File is already exists!!'])
-                        ->withInput();
+                ->withErrors(['errorMessage'=>'File is already exists!!'])
+                ->withInput();
         }
-        Storage::put( $input['people'].'.txt',  $input['people']);
+        Storage::put( $filename,  $input['people']);
         $output = shell_exec('git  add .');
-		$output1 = shell_exec('git -c user.name="creativedevs" -c user.email="info@thecreativedev.com" commit -m "Created new file named: '. $input['people'] .'"');
+		$output1 = shell_exec('git -c user.name="creativedevs" -c user.email="info@thecreativedev.com" commit -m "Created new file named: ' . $filename . ' " ' . $filename);
         $output2 = shell_exec('git push origin master');
-        return redirect()->action('PeopleController@index');
+        return redirect()->action('PeopleController@index')
+        ->withSuccess('File created successfully');
     }
 }
